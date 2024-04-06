@@ -43,14 +43,26 @@ void callback(char* topic, byte* payload, unsigned int length) {
     } 
 
   if (doc.containsKey("Relay1")) {
-    bool relay = doc["Relay1"];
-    if(relay){
+    bool relay1 = doc["Relay1"];
+    if(relay1){
     digitalWrite(32, LOW);
     Serial.println("Relay1: on");
     }
     else{
     digitalWrite(32, HIGH);
     Serial.println("Relay1: off");
+    }
+  } 
+
+    if (doc.containsKey("Relay2")) {
+    bool relay2 = doc["Relay2"];
+    if(relay2){
+    digitalWrite(14, LOW);
+    Serial.println("Relay2: on");
+    }
+    else{
+    digitalWrite(14, HIGH);
+    Serial.println("Relay2: off");
     }
   } 
 }
@@ -65,6 +77,10 @@ void setup() {
 
   pinMode(26,OUTPUT);
   pinMode(32,OUTPUT);
+  pinMode(14,OUTPUT);
+  digitalWrite(26,HIGH);
+  digitalWrite(32, HIGH);
+  digitalWrite(14, HIGH);
 
   if (!sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
     Serial.println("Couldn't find SHT31");
@@ -152,7 +168,7 @@ void loop() {
     loopCnt = 0;
   }
   loopCnt++;
-bool a = f
+
   DynamicJsonDocument jsonDoc(200);
   jsonDoc["humidity"] = h;
   jsonDoc["temperature"] = t;
